@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ea1088</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="windowBackground">#f8f8f8</color>
+
+    <color name="dark">#9effffff</color>
+    <color name="color_title_shots">#a0000000</color>
+    <color name="color_line">#dddddd</color>
+    <color name="color_palce_holder">#dddddd</color>
+
+    <color name="color_refresh_1">#c8ea1088</color>
+    <color name="color_refresh_2">#fbea1088</color>
+    <color name="color_refresh_3">#ea1088</color>
+    <color name="color_tabIndicator">#ffffff</color>
+    <color name="color_tabIndicator_text_select">@android:color/white</color>
+
+    <color name="detail_desc">#666064</color>
+
+</resources>
