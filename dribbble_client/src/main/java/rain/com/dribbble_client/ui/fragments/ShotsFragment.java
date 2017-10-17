@@ -29,7 +29,7 @@ import rain.com.dribbble_client.mvp.ShotsPresenter;
 import rain.com.dribbble_client.mvp.model.Shots;
 import rain.com.dribbble_client.ui.activitys.ShotsDetailsActivity;
 import rain.com.dribbble_client.ui.adatpers.BaseAdatper;
-import rain.com.dribbble_client.ui.adatpers.FootAdatpter;
+import rain.com.dribbble_client.ui.adatpers.FootAdapter;
 import rain.com.dribbble_client.ui.adatpers.LoadMoreAdapter;
 import rain.com.dribbble_client.ui.adatpers.ShotsAdapter;
 import rain.com.dribbble_client.utils.CommonConstant;
@@ -43,7 +43,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.ShotsVi
     @Inject
     ShotsPresenter mPresenter;
 
-    private LoadMoreAdapter mAdapter;
+    private LoadMoreAdapter<Shots> mAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int mPageIndex;
@@ -113,9 +113,9 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.ShotsVi
                 startActivity(intent, options.toBundle());
             }
         });
-        FootAdatpter footAdatpter = new FootAdatpter(shotsAdapter);
+        FootAdapter<Shots> footAdatpter = new FootAdapter<>(shotsAdapter);
         footAdatpter.setFooterView(R.layout.view_loading);
-        mAdapter = new LoadMoreAdapter(footAdatpter, recyclerView);
+        mAdapter = new LoadMoreAdapter<>(footAdatpter,recyclerView);
         mAdapter.setOnLoadMoreListener(new LoadMoreAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

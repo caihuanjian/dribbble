@@ -16,16 +16,16 @@ import rain.com.dribbble_client.R;
  * Created by HwanJ.Choi on 2017-5-18.
  */
 
-public class FootAdatpter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DataOperator {
+public class FootAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DataOperator<T> {
 
     enum ITEM_TYPE {
         NOMAL, FOOTER
     }
 
-    private BaseAdatper mAdapter;
+    private BaseAdatper<T> mAdapter;
     private View mFootView;
 
-    public FootAdatpter(BaseAdatper adatper) {
+    public FootAdapter(BaseAdatper adatper) {
         mAdapter = adatper;
     }
 
@@ -73,13 +73,13 @@ public class FootAdatpter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void updateData(List list) {
+    public void updateData(List<T> list) {
         mAdapter.updateData(list);
         notifyDataSetChanged();
     }
 
     @Override
-    public void appendData(List list) {
+    public void appendData(List<T> list) {
         final int startPosition = mAdapter.getItemCount();
         mAdapter.appendData(list);
         notifyItemRangeChanged(startPosition, list.size());

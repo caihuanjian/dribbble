@@ -19,7 +19,7 @@ public class LoadMoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     protected OnLoadMoreListener mLoadMoreListener;
 
-    private FootAdatpter mFootAdapter;
+    private FootAdapter<T> mFootAdapter;
 
     public void setLoading(boolean loading) {
         isLoading = loading;
@@ -27,9 +27,9 @@ public class LoadMoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     protected boolean isLoading = false;
 
-    public LoadMoreAdapter(FootAdatpter adatpter, RecyclerView recyclerView) {
+    public LoadMoreAdapter(FootAdapter<T> adapter, RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
-        mFootAdapter = adatpter;
+        mFootAdapter = adapter;
         init();
     }
 
@@ -103,16 +103,16 @@ public class LoadMoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void updateData(List list) {
+    public void updateData(List<T> list) {
         mFootAdapter.updateData(list);
         notifyDataSetChanged();
     }
 
     @Override
-    public void appendData(List list) {
-        final int startPostion = mFootAdapter.getItemCount() - 1;
+    public void appendData(List<T> list) {
+        final int startPosition = mFootAdapter.getItemCount() - 1;
         mFootAdapter.appendData(list);
-        notifyItemRangeChanged(startPostion, list.size());
+        notifyItemRangeChanged(startPosition, list.size());
     }
 
     public interface OnLoadMoreListener {
