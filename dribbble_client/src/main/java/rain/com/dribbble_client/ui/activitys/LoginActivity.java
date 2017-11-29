@@ -108,6 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             if (url.contains("?code=") && !isCodeProvided) {
+                mPresenter.unSubscribe();
                 isCodeProvided = true;
                 Uri uri = Uri.parse(url);
                 String code = uri.getQueryParameter("code");

@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import rain.com.dribbble_client.api.DribbbleService;
 import rain.com.dribbble_client.mvp.model.Shots;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by HwanJ.Choi on 2017-5-17.
@@ -73,46 +73,33 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     private void refreshShots(Map<String, String> params) {
         mView.setRefreshIndicator(true);
-        final Observable<List<Shots>> observable = dribbbleService.getShotsList(params);
-        observable.subscribeOn(Schedulers.io())
+        dribbbleService.getShotsList(params).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CustomSubscribe<List<Shots>>() {
+                .subscribe(new Consumer<List<Shots>>() {
                     @Override
-                    public void onNext(List<Shots> shots) {
+                    public void accept(@NonNull List<Shots> shots) throws Exception {
                         mView.setRefreshIndicator(false);
                         mView.onUpdate(shots, true);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        mView.setRefreshIndicator(false);
+                        mView.onError(throwable.getMessage());
                     }
                 });
     }
 
     private void loadShotsByPage(int page, Map<String, String> params) {
         params.put("page", String.valueOf(page));
-        final Observable<List<Shots>> observable = dribbbleService.getShotsList(params);
-        observable.subscribeOn(Schedulers.io())
+        dribbbleService.getShotsList(params).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CustomSubscribe<List<Shots>>() {
+                .subscribe(new Consumer<List<Shots>>() {
                     @Override
-                    public void onNext(List<Shots> shots) {
+                    public void accept(@NonNull List<Shots> shots) throws Exception {
                         mView.onUpdate(shots, false);
                     }
                 });
-    }
 
-    class CustomSubscribe<T> extends Subscriber<T> {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            mView.setRefreshIndicator(false);
-            mView.onError(e.getMessage());
-        }
-
-        @Override
-        public void onNext(T t) {
-
-        }
     }
 }

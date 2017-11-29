@@ -1,5 +1,7 @@
 package rain.com.dribbble_client.ui.activitys;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import rain.com.dribbble_client.MainApp;
 import rain.com.dribbble_client.R;
+import rain.com.dribbble_client.compat.Util;
 import rain.com.dribbble_client.mvp.DetailContract;
 import rain.com.dribbble_client.mvp.DetailPresenter;
 import rain.com.dribbble_client.mvp.model.Shots;
@@ -54,6 +57,7 @@ public class ShotsDetailsActivity extends FragmentActivity implements DetailCont
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +130,7 @@ public class ShotsDetailsActivity extends FragmentActivity implements DetailCont
 
         mTitle = shot.getTitle();
         mCollapLayout.setTitle(shot.getTitle());
-        mDesc.setText(Html.fromHtml(shot.getDescription()));
+        mDesc.setText(Util.fromHtmlCompat(shot.getDescription()));
         mAutorInfo.setText(shot.getUser().getName());
 
     }
